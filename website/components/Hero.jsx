@@ -43,7 +43,7 @@ function Hero() {
           maxWidth: 1040,
         }}>
           <span className="hero-line" style={{ display: 'block', '--d': '0.2s' }}>
-            Wir bringen gar nichts kritische
+            Wir bringen viel Wein
           </span>
           <span className="hero-line" style={{ display: 'block', '--d': '0.35s' }}>
             IT-Projekte sicher ins{' '}
