@@ -33,8 +33,7 @@ function Hero() {
             textTransform: 'uppercase', color: 'var(--accent)',
           }}>P&nbsp;R&nbsp;O&nbsp;J&nbsp;E&nbsp;C&nbsp;T&nbsp;S&nbsp;&nbsp;&nbsp;I&nbsp;N&nbsp;&nbsp;&nbsp;M&nbsp;O&nbsp;T&nbsp;I&nbsp;O&nbsp;N</div>
         </div>
-
-        <h1 style={{
+<h1 style={{
           margin: '32px 0 0',
           fontWeight: 300,
           fontSize: 'clamp(48px, 7vw, 92px)',
@@ -43,7 +42,7 @@ function Hero() {
           maxWidth: 1040,
         }}>
           <span className="hero-line" style={{ display: 'block', '--d': '0.2s' }}>
-            Gabriel machts alles
+            Nico machts alles
           </span>
           <span className="hero-line" style={{ display: 'block', '--d': '0.35s' }}>
             IT-Projekte sicher ins{' '}
