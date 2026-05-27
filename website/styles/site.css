@@ -1,0 +1,242 @@
+/* ============================================================
+   ONEXIS landing page — layout helpers & section utilities
+   Tokens come from tokens.css (the design-system file).
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+img { display: block; max-width: 100%; }
+button { font: inherit; }
+
+/* container helpers ----------------------------------------- */
+.container        { max-width: var(--container-default); margin: 0 auto; padding: 0 32px; }
+.container-wide   { max-width: var(--container-wide);    margin: 0 auto; padding: 0 32px; }
+.container-narrow { max-width: var(--container-narrow);  margin: 0 auto; padding: 0 32px; }
+
+/* section spacing ------------------------------------------- */
+.section          { padding: 128px 0; position: relative; }
+.section-sm       { padding: 80px 0; }
+.section.muted    { background: var(--bg-muted); }
+.section.inverse  { background: var(--onexis-anthrazit); color: #fff; }
+.section.inverse .body, .section.inverse p { color: #CECECE; }
+.section.inverse h1, .section.inverse h2, .section.inverse h3 { color: #fff; }
+
+/* eyebrow --------------------------------------------------- */
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 28px; height: 1px;
+  background: var(--accent);
+}
+.eyebrow.no-rule::before { display: none; }
+
+/* hairline ribbon ------------------------------------------- */
+.rule {
+  height: 1px;
+  background: var(--border);
+  border: 0;
+  margin: 0;
+}
+
+/* big editorial heading helper ------------------------------ */
+.h-display {
+  font-weight: 300;
+  font-size: clamp(48px, 6.5vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  margin: 0;
+}
+.h-section {
+  font-weight: 300;
+  font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1.06;
+  letter-spacing: -0.024em;
+  margin: 0;
+}
+.h-card {
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* buttons --------------------------------------------------- */
+.btn {
+  font-family: var(--font-sans);
+  font-size: 15px; font-weight: 500;
+  padding: 14px 26px;
+  border-radius: 10px;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background var(--dur-base) var(--ease-out),
+              color var(--dur-base) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #0e2a30;
+  box-shadow: var(--shadow-accent);
+}
+.btn-primary:hover { background: var(--accent-hover); color: #0e2a30; }
+.btn-dark {
+  background: var(--onexis-anthrazit);
+  color: #fff;
+}
+.btn-dark:hover { background: #2a2a2a; }
+.btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
+}
+.btn-ghost:hover { background: var(--bg-muted); }
+.btn-ghost-inverse {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.25);
+}
+.btn-ghost-inverse:hover { background: rgba(255,255,255,.06); }
+
+/* arrow glyph used in CTAs --------------------------------- */
+.arrow {
+  width: 14px; height: 14px;
+  display: inline-block;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* anchor link in copy --------------------------------------- */
+.text-link {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  text-decoration: none;
+}
+.text-link:hover { color: var(--accent-hover); }
+
+/* mono numeric label --------------------------------------- */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* tabular figures for KPI numbers --------------------------- */
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* card ------------------------------------------------------ */
+.card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  border: 1px solid var(--border);
+  transition: box-shadow var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+}
+.card:hover {
+  box-shadow: var(--shadow-2);
+  border-color: var(--border-strong);
+}
+
+/* fade-in on scroll ---------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* hero entrance --------------------------------------------- */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes hero-watermark-settle {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 0.05; transform: none; }
+}
+@keyframes hero-rule-grow {
+  from { width: 0; }
+  to   { width: 32px; }
+}
+
+.hero-line {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: hero-fade-up 700ms var(--ease-out) forwards;
+  animation-delay: var(--d, 0s);
+  will-change: opacity, transform;
+}
+.hero-watermark {
+  opacity: 0;
+  animation: hero-watermark-settle 1600ms var(--ease-out) forwards;
+  animation-delay: 0.1s;
+}
+.hero-rule {
+  display: inline-block;
+  height: 1px;
+  width: 0;
+  background: var(--accent);
+  animation: hero-rule-grow 700ms var(--ease-out) forwards;
+  animation-delay: 0.05s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line, .hero-watermark, .hero-rule {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    width: 32px;
+  }
+  .hero-watermark { opacity: 0.05 !important; }
+}
+
+/* TOM scrollytelling --------------------------------------- */
+@keyframes tom-narration-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.tom-narration {
+  animation: tom-narration-in 360ms var(--ease-out) both;
+}
+
+/* fall back to non-pinned layout on narrow viewports --------- */
+@media (max-width: 960px) {
+  .tom-scroll-section { height: auto !important; }
+  .tom-scroll-section .tom-sticky {
+    position: static !important;
+    height: auto !important;
+    padding: 80px 0;
+  }
+  .tom-scroll-section .tom-sticky > .container-wide {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tom-narration { animation: none !important; }
+}
+
+/* responsive nudges ----------------------------------------- */
+@media (max-width: 900px) {
+  .section { padding: 80px 0; }
+}
