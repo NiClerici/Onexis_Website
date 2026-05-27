@@ -1,0 +1,9 @@
+{
+  "name": "onexis-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ONEXIS GmbH - Projects in Motion",
+  "scripts": {
+    "build": "echo 'Static site - no build required'"
+  }
+}
