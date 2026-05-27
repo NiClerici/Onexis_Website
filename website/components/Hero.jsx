@@ -7,7 +7,7 @@ function Hero() {
       color: '#fff',
       overflow: 'hidden',
     }}>
-      {/* faint X watermark — slowly settles in on load */}
+      {/* faint X watermark -- slowly settles in on load */}
       <img src="assets/logo-x-negativ.svg" alt="" aria-hidden="true"
         className="hero-watermark"
         style={{
@@ -43,21 +43,20 @@ function Hero() {
           maxWidth: 1040,
         }}>
           <span className="hero-line" style={{ display: 'block', '--d': '0.2s' }}>
-            Wir bringen viel Wein
+            Gabriel machts alles
           </span>
           <span className="hero-line" style={{ display: 'block', '--d': '0.35s' }}>
             IT-Projekte sicher ins{' '}
             <span style={{ color: 'var(--accent)' }}>Ziel.</span>
           </span>
         </h1>
-
-        <p className="hero-line" style={{
+<p className="hero-line" style={{
           '--d': '0.55s',
           marginTop: 36, fontSize: 19, lineHeight: 1.6,
           color: '#D6D6D6', maxWidth: 620,
         }}>
           ONEXIS leitet und steuert IT-Vorhaben von der Planung bis zur
-          Betriebs­übergabe — national wie international. Auf Wunsch auch
+          Betriebsuebergabe - national wie international. Auf Wunsch auch
           als Health Check, Interim-Manager oder PMO.
         </p>
 
@@ -69,7 +68,7 @@ function Hero() {
             Leistungen ansehen <Arrow />
           </a>
           <a href="#kontakt" className="btn btn-ghost-inverse">
-            Gespräch vereinbaren
+            Gespraech vereinbaren
           </a>
         </div>
       </div>
