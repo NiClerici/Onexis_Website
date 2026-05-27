@@ -1,5 +1,6 @@
 /* eslint-disable */
 function Team() {
+  const c = window.CONTENT.team;
   return (
     <section id="team" className="section muted">
       <div className="container-wide">
@@ -8,18 +9,15 @@ function Team() {
           gap: 80, alignItems: 'center',
         }}>
           <div>
-            <div className="eyebrow">Team</div>
+            <div className="eyebrow">{c.eyebrow}</div>
             <h2 className="h-section" style={{ marginTop: 16, maxWidth: 540 }}>
-              Ein Team aus 10+<br />Professionals.
+              {c.heading[0]}<br />{c.heading[1]}
             </h2>
             <p style={{
               marginTop: 24, fontSize: 18, lineHeight: 1.6, color: 'var(--fg)',
               maxWidth: 540,
             }}>
-              Wir durften in unserer Laufbahn mehr als 30 Kunden national und
-              international bedienen und viele Mandate zum Erfolg bringen.
-              Unser Rezept: ziel- und lösungs­orientiert, klar, strukturiert
-              und pragmatisch.
+              {c.body}
             </p>
 
             <div style={{
@@ -32,11 +30,11 @@ function Team() {
                 background: 'var(--onexis-anthrazit)', color: '#fff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontWeight: 500, fontSize: 16,
-              }}>SB</div>
+              }}>{c.memberInitials}</div>
               <div>
-                <div style={{ fontSize: 15, fontWeight: 600 }}>Stefan Büttler</div>
+                <div style={{ fontSize: 15, fontWeight: 600 }}>{c.memberName}</div>
                 <div style={{ fontSize: 13, color: 'var(--fg-muted)' }}>
-                  Gründer und Geschäftsführer
+                  {c.memberTitle}
                 </div>
               </div>
             </div>

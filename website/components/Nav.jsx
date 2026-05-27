@@ -1,5 +1,6 @@
 /* eslint-disable */
 function Nav() {
+  const c = window.CONTENT.nav;
   const [scrolled, setScrolled] = React.useState(false);
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -7,13 +8,6 @@ function Nav() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  const links = [
-    { href: '#leistungen', label: 'Leistungen' },
-    { href: '#vorgehen',   label: 'Vorgehen' },
-    { href: '#referenzen', label: 'Referenzen' },
-    { href: '#team',       label: 'Team' },
-  ];
 
   return (
     <header style={{
@@ -31,13 +25,13 @@ function Nav() {
           <img src="assets/logo.svg" alt="ONEXIS" style={{ height: 28 }} />
         </a>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-          {links.map(l => (
+          {c.links.map(l => (
             <a key={l.href} href={l.href} style={{
               fontSize: 14, color: 'var(--fg)', fontWeight: 500, textDecoration: 'none',
             }}>{l.label}</a>
           ))}
           <a href="#kontakt" className="btn btn-dark" style={{ padding: '10px 18px' }}>
-            Kontakt
+            {c.cta}
           </a>
         </nav>
       </div>

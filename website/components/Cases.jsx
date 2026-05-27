@@ -1,28 +1,4 @@
 /* eslint-disable */
-const CASES = [
-  {
-    sector: 'Versicherungen',
-    role: 'Interim · PMO',
-    headline: 'Eskaliertes Kernsystem-Programm stabilisiert.',
-    body: 'Schaden­plattform-Programm 11 Monate hinter Plan, Reporting unbrauchbar, vier Lieferanten im Konflikt. Wir haben Interim-Programm­leitung übernommen, ein schlankes PMO aufgesetzt und auf ein realistisches 18-Monats-Fenster re-geplant.',
-    metric: { v: '90 Tage', l: 'bis Stabilisierung' },
-  },
-  {
-    sector: 'Öffentliche Verwaltung',
-    role: 'IT-Architektur',
-    headline: 'Architektur-Zielbild für ein Bürgerportal.',
-    body: 'Fachseite und IT diskutierten seit über einem Jahr ohne tragfähige Entscheidung. Wir haben drei Szenarien sauber gerechnet, eine Roadmap inkl. TCO erstellt — einstimmig im Lenkungs­ausschuss verabschiedet.',
-    metric: { v: '8 Wochen', l: 'bis Entscheid' },
-  },
-  {
-    sector: 'Energie',
-    role: 'PMO · Projektleitung',
-    headline: 'Portfolio-Cockpit aufgebaut und übergeben.',
-    body: 'Vierzehn parallele IT-Vorhaben ohne gemeinsame Methodik. Wir haben ein PMO aufgebaut, das Portfolio-Cockpit etabliert und nach neun Monaten an die interne Leitung übergeben.',
-    metric: { v: '9 Monate', l: 'bis interne Übergabe' },
-  },
-];
-
 function CaseRow({ c }) {
   return (
     <article style={{
@@ -67,24 +43,24 @@ function CaseRow({ c }) {
 }
 
 function Cases() {
+  const c = window.CONTENT.cases;
   return (
     <section id="referenzen" className="section muted">
       <div className="container-wide">
-        <div className="eyebrow">Referenzen</div>
+        <div className="eyebrow">{c.eyebrow}</div>
         <h2 className="h-section" style={{ marginTop: 16, maxWidth: 760 }}>
-          Drei Mandate.<br />
-          Drei sehr unterschiedliche Lagen.
+          {c.heading[0]}<br />
+          {c.heading[1]}
         </h2>
         <p style={{
           marginTop: 20, fontSize: 17, lineHeight: 1.6, color: 'var(--fg-muted)',
           maxWidth: 640,
         }}>
-          Namen unserer Kunden teilen wir auf Anfrage. Hier exemplarisch,
-          anonymisiert — was wir konkret bewirkt haben.
+          {c.intro}
         </p>
 
         <div style={{ marginTop: 40, borderBottom: '1px solid var(--border)' }}>
-          {CASES.map((c, i) => <CaseRow key={i} c={c} />)}
+          {c.items.map((item, i) => <CaseRow key={i} c={item} />)}
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 /* eslint-disable */
 function Contact() {
+  const c = window.CONTENT.contact;
   const [submitted, setSubmitted] = React.useState(false);
   const [form, setForm] = React.useState({
     vorname: '', nachname: '', email: '', mitteilung: '',
@@ -27,29 +28,28 @@ function Contact() {
         gap: 80, alignItems: 'start',
       }}>
         <div>
-          <div className="eyebrow">Kontakt</div>
+          <div className="eyebrow">{c.eyebrow}</div>
           <h2 className="h-section" style={{ marginTop: 16 }}>
-            Sprechen wir.
+            {c.heading}
           </h2>
           <p style={{
             marginTop: 24, fontSize: 17, lineHeight: 1.6, color: 'var(--fg-muted)',
             maxWidth: 460,
           }}>
-            Erst­gespräch innerhalb von 48 Stunden, ohne Vertriebs­schleife.
-            Wir hören zu — und sagen ehrlich, ob wir die Richtigen sind.
+            {c.intro}
           </p>
 
           <div style={{
             marginTop: 36, fontSize: 16, lineHeight: 1.8, color: 'var(--fg)',
           }}>
-            <strong style={{ fontWeight: 600 }}>ONEXIS GmbH</strong><br />
-            Sissacherstrasse 20<br />
-            4460 Gelterkinden<br />
-            <a href="tel:+41615561010" style={{ color: 'var(--accent)' }}>
-              061 556 10 10
+            <strong style={{ fontWeight: 600 }}>{c.companyName}</strong><br />
+            {c.street}<br />
+            {c.city}<br />
+            <a href={c.phoneHref} style={{ color: 'var(--accent)' }}>
+              {c.phone}
             </a><br />
-            <a href="mailto:kontakt@onexis.ch" style={{ color: 'var(--accent)' }}>
-              kontakt@onexis.ch
+            <a href={c.emailHref} style={{ color: 'var(--accent)' }}>
+              {c.email}
             </a>
           </div>
         </div>
@@ -69,10 +69,10 @@ function Contact() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: 'var(--accent)', fontSize: 28, fontWeight: 600,
               }}>✓</div>
-              <h3 style={{ margin: 0, fontWeight: 300, fontSize: 26 }}>Vielen Dank.</h3>
+              <h3 style={{ margin: 0, fontWeight: 300, fontSize: 26 }}>{c.successTitle}</h3>
               <p style={{
                 marginTop: 8, fontSize: 15, color: 'var(--fg-muted)',
-              }}>Wir melden uns innerhalb von 48 Stunden.</p>
+              }}>{c.successBody}</p>
             </div>
           ) : (
             <>
@@ -81,27 +81,27 @@ function Contact() {
                 gap: 14, marginBottom: 14,
               }}>
                 <div>
-                  <label style={labelStyle}>Vorname</label>
+                  <label style={labelStyle}>{c.labelFirstName}</label>
                   <input style={inputStyle} value={form.vorname} onChange={set('vorname')} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Nachname</label>
+                  <label style={labelStyle}>{c.labelLastName}</label>
                   <input style={inputStyle} value={form.nachname} onChange={set('nachname')} />
                 </div>
               </div>
               <div style={{ marginBottom: 14 }}>
-                <label style={labelStyle}>E-Mail</label>
+                <label style={labelStyle}>{c.labelEmail}</label>
                 <input style={inputStyle} type="email" value={form.email} onChange={set('email')} />
               </div>
               <div style={{ marginBottom: 20 }}>
-                <label style={labelStyle}>Mitteilung</label>
+                <label style={labelStyle}>{c.labelMessage}</label>
                 <textarea
                   style={{ ...inputStyle, minHeight: 120, resize: 'vertical', fontFamily: 'var(--font-sans)' }}
                   value={form.mitteilung} onChange={set('mitteilung')}
                 />
               </div>
               <button type="submit" className="btn btn-dark">
-                Senden <Arrow />
+                {c.labelSubmit} <Arrow />
               </button>
             </>
           )}

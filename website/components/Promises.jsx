@@ -1,25 +1,20 @@
 /* eslint-disable */
 function Promises() {
-  const items = [
-    'Wir finden gemeinsam Lösungen.',
-    'Wir leben Termintreue.',
-    'Wir sind fokussiert auf Ihr Ziel.',
-    'Wir sind pragmatisch.',
-  ];
+  const c = window.CONTENT.promises;
   return (
     <section className="section" style={{ paddingTop: 120, paddingBottom: 120 }}>
       <div className="container">
-        <div className="eyebrow">Was uns auszeichnet</div>
+        <div className="eyebrow">{c.eyebrow}</div>
         <h2 className="h-section" style={{ marginTop: 16, maxWidth: 720 }}>
-          Weil Ihre Zufriedenheit<br />
-          unser Antrieb ist.
+          {c.heading[0]}<br />
+          {c.heading[1]}
         </h2>
 
         <div style={{
           marginTop: 56,
           borderTop: '1px solid var(--border)',
         }}>
-          {items.map((t, i) => (
+          {c.items.map((t, i) => (
             <div key={i} style={{
               display: 'flex', alignItems: 'center', gap: 24,
               padding: '24px 0',

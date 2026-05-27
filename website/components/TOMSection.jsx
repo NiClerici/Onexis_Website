@@ -10,59 +10,8 @@
   Beim Pin übernimmt der Scroll-Fortschritt, beim Hover/Klick der User.
 */
 
-const TOM_QUADRANTS = [
-  {
-    title: 'Organisation & Governance',
-    short: 'Organisation',
-    sub: 'Struktur, Rollen, Steuerung.',
-    body: 'Wer entscheidet, wer berichtet, wer eskaliert? Wir setzen das PMO auf, definieren Rollen und Steuergremien — bis aus einem Projekt­wust wieder eine geführte Lieferung wird.',
-    items: [
-      'PMO und Projekt­organisation aufsetzen',
-      'Steuerung, Reporting, Eskalation',
-      'Rollen und Verantwortung klären',
-    ],
-  },
-  {
-    title: 'Prozesse & Daten',
-    short: 'Prozesse',
-    sub: 'Methodik, Lieferung, Qualität.',
-    body: 'Klassisch, hybrid oder agil — wir wählen das Vorgehen, das zu Ihrem Vorhaben passt, und bauen die Quality Gates ein, die Sie schlafen lassen.',
-    items: [
-      'Projektmethodik — klassisch, hybrid, agil',
-      'Daten- und Prozess-Health-Checks',
-      'Betriebs­übergabe und Run-Modell',
-    ],
-  },
-  {
-    title: 'People & Skills',
-    short: 'People',
-    sub: 'Menschen, Wissen, Befähigung.',
-    body: 'Interim-Mandat, CIO-Sparring, Inhouse-Seminar — wir bringen Senior-Köpfe ins Team und transferieren Wissen, statt Abhängig­keit aufzubauen.',
-    items: [
-      'Interim-Management',
-      'Sparring für CIOs und IT-Leitung',
-      'Seminare und Inhouse-Trainings',
-    ],
-  },
-  {
-    title: 'Infrastruktur & Technologie',
-    short: 'Technologie',
-    sub: 'Architektur, Stack, Integration.',
-    body: 'Vom Enterprise-Zielbild bis zur Plattform-Wahl: wir bauen Architekturen, die nicht nur das nächste Vorhaben tragen, sondern die fünf danach.',
-    items: [
-      'Enterprise- und Applikations­architektur',
-      'Zielbild und Plattform-Strategie',
-      'Vendor- und Tech-Stack-Reviews',
-    ],
-  },
-];
-
-const SERVICES = [
-  { name: 'Projektleitung',  body: 'Von der Planung bis zur Betriebs­übergabe — verlässlich zum Ziel.' },
-  { name: 'Health Check',    body: 'Klarheit in zwei bis vier Wochen, wenn ein Projekt wackelt.' },
-  { name: 'Interim',         body: 'Verantwortung auf Zeit, mit klarem Mandat und Übergabe.' },
-  { name: 'PMO',             body: 'Aufbau und Betrieb eines wirkungsvollen Portfolio-Cockpits.' },
-];
+const TOM_QUADRANTS = window.CONTENT.tom.quadrants;
+const SERVICES = window.CONTENT.tom.services;
 
 /* ------------------------------------------------------------------ */
 /*  Geometry helpers                                                  */
@@ -470,12 +419,12 @@ function TOMSection() {
           }}>
             {/* Narration */}
             <div>
-              <div className="eyebrow">Leistungen</div>
+              <div className="eyebrow">{window.CONTENT.tom.eyebrow}</div>
               <h2 className="h-section" style={{
                 marginTop: 14, marginBottom: 32, maxWidth: 540,
               }}>
-                Vier Dimensionen.<br />
-                Ein Target Operating&nbsp;Model.
+                {window.CONTENT.tom.heading[0]}<br />
+                {window.CONTENT.tom.heading[1]}
               </h2>
 
               <div style={{

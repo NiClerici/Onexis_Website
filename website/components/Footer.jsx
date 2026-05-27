@@ -1,5 +1,6 @@
 /* eslint-disable */
 function Footer() {
+  const c = window.CONTENT.footer;
   const linkStyle = {
     color: '#CECECE', fontSize: 14, textDecoration: 'none', cursor: 'pointer',
     padding: '4px 0',
@@ -25,25 +26,24 @@ function Footer() {
             <p style={{
               margin: 0, fontSize: 14, color: '#CECECE', lineHeight: 1.7, maxWidth: 360,
             }}>
-              Ihr Partner für IT-Beratung, Projekt-Management,
-              IT-Architektur & Seminare.
+              {c.tagline}
             </p>
           </div>
           <div>
-            <div style={colTitle}>Adresse</div>
+            <div style={colTitle}>{c.addressTitle}</div>
             <div style={{ fontSize: 14, color: '#CECECE', lineHeight: 1.7 }}>
-              ONEXIS GmbH<br />
-              Sissacherstrasse 20<br />
-              4460 Gelterkinden<br />
-              061 556 10 10
+              {c.company}<br />
+              {c.street}<br />
+              {c.city}<br />
+              {c.phone}
             </div>
           </div>
           <div>
-            <div style={colTitle}>Rechtliches</div>
+            <div style={colTitle}>{c.legalTitle}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <a style={linkStyle}>Impressum</a>
-              <a style={linkStyle}>Datenschutz</a>
-              <a style={linkStyle}>AGB</a>
+              {c.legalLinks.map(l => (
+                <a key={l} style={linkStyle}>{l}</a>
+              ))}
             </div>
           </div>
         </div>
@@ -53,12 +53,12 @@ function Footer() {
           alignItems: 'center', fontSize: 12, color: '#9D9D9D',
           flexWrap: 'wrap', gap: 12,
         }}>
-          <div>© 2026 ONEXIS GmbH</div>
+          <div>{c.copyright}</div>
           <div style={{
             letterSpacing: '0.18em', textTransform: 'uppercase',
             color: 'var(--accent)', fontWeight: 600,
           }}>
-            Projects in Motion
+            {c.slogan}
           </div>
         </div>
       </div>
