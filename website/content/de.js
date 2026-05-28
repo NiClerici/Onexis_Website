@@ -11,7 +11,7 @@ window.CONTENT = {
   },
 
   hero: {
-    title: 'Stefan bitte ändere diesen Text! ',
+    title: 'asdasdfasdfasf ',
     subtitle: 'Hallo Hallo Hallo.',
     ctaPrimary: 'Leistungen ansehen',
     ctaSecondary: 'Gespraech vereinbaren',
