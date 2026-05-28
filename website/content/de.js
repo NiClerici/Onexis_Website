@@ -11,8 +11,8 @@ window.CONTENT = {
   },
 
   hero: {
-    title: 'Test ',
-    subtitle: 'ONEXIS leitet und steuert IT-Vorhaben von der Planung bis zur Betriebs�bergabe - national wie international. Auf Wunsch auch als Health Check, Interim-Manager oder PMO.',
+    title: 'öö$üöüä ',
+    subtitle: 'ONEXIS leitet und steuert IT-Vorhaben von der Planung bis zur Betriebsübergabe - national wie international. Auf Wunsch auch als Health Check, Interim-Manager oder PMO.',
     ctaPrimary: 'Leistungen ansehen',
     ctaSecondary: 'Gespraech vereinbaren',
   },
@@ -176,7 +176,7 @@ window.CONTENT = {
     phone: '061 556 10 10',
     legalTitle: 'Rechtliches',
     legalLinks: ['Impressum', 'Datenschutz', 'AGB'],
-    copyright: '� 2026 ONEXIS GmbH',
+    copyright: '© 2026 ONEXIS GmbH',
     slogan: 'Projects in Motion',
   },
 
