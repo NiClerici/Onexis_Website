@@ -12,7 +12,7 @@ window.CONTENT = {
 
   hero: {
     title: 'Stefan bitte ändere diesen Text! ',
-    subtitle: 'ONEXIS leitet und steuert IT-Vorhaben von der Planung bis zur Betriebsübergabe - national wie international. Auf Wunsch auch als Health Check, Interim-Manager oder PMO.',
+    subtitle: 'Hallo Hallo Hallo.',
     ctaPrimary: 'Leistungen ansehen',
     ctaSecondary: 'Gespraech vereinbaren',
   },
