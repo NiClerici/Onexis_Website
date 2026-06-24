@@ -1,4 +1,5 @@
-/* eslint-disable */
+import CONTENT from '../content/de.js'
+
 function CaseRow({ c }) {
   return (
     <article className="case-row">
@@ -32,11 +33,11 @@ function CaseRow({ c }) {
         <div style={{ fontSize: 14, color: 'var(--fg-muted)' }}>{c.metric.l}</div>
       </div>
     </article>
-  );
+  )
 }
 
 function Cases() {
-  const c = window.CONTENT.cases;
+  const c = CONTENT.cases
   return (
     <section id="referenzen" className="section muted">
       <div className="container-wide">
@@ -57,7 +58,7 @@ function Cases() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-window.Cases = Cases;
+export default Cases

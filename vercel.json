@@ -1,6 +1,6 @@
 {
-  "buildCommand": "echo 'Static site'",
-  "outputDirectory": "website",
+  "buildCommand": "cd website && npm install && npm run build",
+  "outputDirectory": "website/dist",
   "headers": [
     {
       "source": "/assets/(.*)",

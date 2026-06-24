@@ -1,6 +1,7 @@
-/* eslint-disable */
+import CONTENT from '../content/de.js'
+
 function Vorgehen() {
-  const c = window.CONTENT.vorgehen;
+  const c = CONTENT.vorgehen
   return (
     <section id="vorgehen" className="section">
       <div className="container-wide">
@@ -29,6 +30,7 @@ function Vorgehen() {
         </div>
       </div>
     </section>
-  );
+  )
 }
-window.Vorgehen = Vorgehen;
+
+export default Vorgehen

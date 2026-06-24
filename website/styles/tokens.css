@@ -129,6 +129,11 @@
   --dur-base:                200ms;
   --dur-slow:                360ms;
 
+  /* ---- Error / validation state ------------------------ */
+  --color-error:             #C0453B; /* border on invalid fields */
+  --color-error-text:        #B23A30; /* inline error message text */
+  --color-error-subtle:      rgba(192,69,59,.14); /* error focus ring */
+
   /* ---- Container widths --------------------------------- */
   --container-narrow:        720px;
   --container-default:       1100px;

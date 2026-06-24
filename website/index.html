@@ -6,50 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description"
     content="ONEXIS GmbH — Schweizer Partner für IT-Beratung, Projekt-Management, IT-Architektur und Seminare. Wir bringen kritische IT-Vorhaben sicher ins Ziel." />
-  <link rel="icon" href="assets/logo-x.svg" />
-  <link rel="stylesheet" href="styles/tokens.css" />
-  <link rel="stylesheet" href="styles/site.css" />
+  <link rel="icon" href="/assets/logo-x.svg" />
 </head>
 <body>
+  <a href="#main-content" class="sr-only">Zum Inhalt springen</a>
   <div id="app"></div>
-
-  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
-  <script src="content/de.js"></script>
-
-  <script type="text/babel" src="components/Nav.jsx"></script>
-  <script type="text/babel" src="components/Hero.jsx"></script>
-  <script type="text/babel" src="components/Promises.jsx"></script>
-  <script type="text/babel" src="components/TOMSection.jsx"></script>
-  <script type="text/babel" src="components/Vorgehen.jsx"></script>
-  <script type="text/babel" src="components/Cases.jsx"></script>
-  <script type="text/babel" src="components/Sectors.jsx"></script>
-  <script type="text/babel" src="components/Team.jsx"></script>
-  <script type="text/babel" src="components/Contact.jsx"></script>
-  <script type="text/babel" src="components/Footer.jsx"></script>
-
-  <script type="text/babel">
-    function App() {
-      return (
-        <>
-          <Nav />
-          <main>
-            <Hero />
-            <Promises />
-            <TOMSection />
-            <Vorgehen />
-            <Cases />
-            <Sectors />
-            <Team />
-            <Contact />
-          </main>
-          <Footer />
-        </>
-      );
-    }
-    ReactDOM.createRoot(document.getElementById('app')).render(<App />);
-  </script>
+  <script type="module" src="/main.jsx"></script>
 </body>
 </html>

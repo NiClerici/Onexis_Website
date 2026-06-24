@@ -1,4 +1,4 @@
-window.CONTENT = {
+const CONTENT = {
 
   nav: {
     links: [
@@ -187,4 +187,6 @@ window.CONTENT = {
     slogan: 'Projects in Motion',
   },
 
-};
+}
+
+export default CONTENT

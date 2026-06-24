@@ -1,88 +1,64 @@
-/* eslint-disable */
-/*
-  Leistungen — TOM als animierter 4-Quadranten-Kreis.
+import React from 'react'
+import CONTENT from '../content/de.js'
 
-  Der äussere Ring besteht aus 4 Bogen-Segmenten (je 90°). Der aktive
-  Quadrant ist teal-eingefärbt, die anderen anthrazit-25. Beim ersten
-  Sichtbarwerden wird der Ring im Uhrzeigersinn "gezeichnet"
-  (stroke-dashoffset). Solange weder Scroll-Pin noch Hover/Klick aktiv
-  ist, rotiert die Auswahl automatisch durch die vier Dimensionen.
-  Beim Pin übernimmt der Scroll-Fortschritt, beim Hover/Klick der User.
-*/
-
-const TOM_QUADRANTS = window.CONTENT.tom.quadrants;
-const SERVICES = window.CONTENT.tom.services;
+const TOM_QUADRANTS = CONTENT.tom.quadrants
+const SERVICES = CONTENT.tom.services
 
 /* ------------------------------------------------------------------ */
 /*  Geometry helpers                                                  */
 /* ------------------------------------------------------------------ */
-const CX = 250, CY = 250;
-const R_RING = 218;        // outer ring radius
-const R_LABEL = 188;       // label baseline radius (inside the ring)
-const R_ICON = 120;        // icon centre distance from middle
+const CX = 250, CY = 250
+const R_RING = 218
+const R_LABEL = 188
+const R_ICON = 120
 
-// quadrant index → arc angles (deg, 0 = 3 o'clock, +ve clockwise in SVG)
-// 0 = top-left, 1 = top-right, 2 = bottom-right, 3 = bottom-left
 const ARC_ANGLES = [
-  { start: 180, end: 270 }, // TL
-  { start: 270, end: 360 }, // TR
-  { start: 0,   end: 90  }, // BR
-  { start: 90,  end: 180 }, // BL
-];
+  { start: 180, end: 270 },
+  { start: 270, end: 360 },
+  { start: 0,   end: 90  },
+  { start: 90,  end: 180 },
+]
 
-// label paths — direction chosen so the text reads outwards
-// (top half: clockwise; bottom half: counter-clockwise so it's right-side-up)
 function polar(angleDeg, r) {
-  const a = (angleDeg * Math.PI) / 180;
-  return [CX + r * Math.cos(a), CY + r * Math.sin(a)];
+  const a = (angleDeg * Math.PI) / 180
+  return [CX + r * Math.cos(a), CY + r * Math.sin(a)]
 }
 
 function arcPath(startDeg, endDeg, r, sweep = 1) {
-  const [sx, sy] = polar(startDeg, r);
-  const [ex, ey] = polar(endDeg, r);
-  const large = Math.abs(endDeg - startDeg) > 180 ? 1 : 0;
-  return `M ${sx.toFixed(2)} ${sy.toFixed(2)} A ${r} ${r} 0 ${large} ${sweep} ${ex.toFixed(2)} ${ey.toFixed(2)}`;
+  const [sx, sy] = polar(startDeg, r)
+  const [ex, ey] = polar(endDeg, r)
+  const large = Math.abs(endDeg - startDeg) > 180 ? 1 : 0
+  return `M ${sx.toFixed(2)} ${sy.toFixed(2)} A ${r} ${r} 0 ${large} ${sweep} ${ex.toFixed(2)} ${ey.toFixed(2)}`
 }
 
-// One label path per quadrant. Margins (12°) so text doesn't kiss the divider.
 const LABEL_PATHS = [
-  // TL: read upwards along the inside of the arc — path 192° → 258°, sweep clockwise
   { id: 'lp-0', d: arcPath(192, 258, R_LABEL, 1) },
-  // TR: read downwards — 282° → 348° sweep 1
   { id: 'lp-1', d: arcPath(282, 348, R_LABEL, 1) },
-  // BR: bottom — to keep it readable, reverse so text is right-side-up:
-  // path from 78° → 12° sweep 0 (counter-clockwise)
   { id: 'lp-2', d: arcPath(78, 12, R_LABEL, 0) },
-  // BL: 168° → 102° sweep 0
   { id: 'lp-3', d: arcPath(168, 102, R_LABEL, 0) },
-];
+]
 
-// icon centres (midpoint of each quadrant, at R_ICON)
 const ICON_CENTERS = [
-  polar(225, R_ICON), // TL
-  polar(315, R_ICON), // TR
-  polar(45,  R_ICON), // BR
-  polar(135, R_ICON), // BL
-];
+  polar(225, R_ICON),
+  polar(315, R_ICON),
+  polar(45,  R_ICON),
+  polar(135, R_ICON),
+]
 
-/* ------------------------------------------------------------------ */
-/*  Official ONEXIS icons — loaded via <image>. Quadrant order:       */
-/*  0 Organisation, 1 Prozesse, 2 People, 3 Infrastruktur             */
-/* ------------------------------------------------------------------ */
 const ICON_SRCS = [
-  'assets/icon-tom-organisation.svg',
-  'assets/icon-tom-prozesse.svg',
-  'assets/icon-tom-people.svg',
-  'assets/icon-tom-infrastruktur.svg',
-];
-const ICON_SIZE = 78;
+  '/assets/icon-tom-organisation.svg',
+  '/assets/icon-tom-prozesse.svg',
+  '/assets/icon-tom-people.svg',
+  '/assets/icon-tom-infrastruktur.svg',
+]
+const ICON_SIZE = 78
 
 /* ------------------------------------------------------------------ */
-/*  Diagram                                                           */
+/*  Diagram — aria-hidden; keyboard control lives in the tab buttons  */
 /* ------------------------------------------------------------------ */
-function TOMCircle({ activeIdx, onPick, mounted }) {
-  // Each arc has its own stroke-dasharray for draw-in animation
-  const circumQuarter = (Math.PI * R_RING * 2) / 4; // arc length of 90°
+function TOMCircle({ activeIdx, onPick, mounted, prefersReduced }) {
+  const dur = (base) => prefersReduced ? '0ms' : base
+  const circumQuarter = (Math.PI * R_RING * 2) / 4
 
   return (
     <div style={{
@@ -92,7 +68,9 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
       margin: '0 auto',
       aspectRatio: '1 / 1',
     }}>
+      {/* aria-hidden: keyboard users control TOM via the tablist above */}
       <svg viewBox="0 0 500 500" width="100%" height="100%"
+        aria-hidden="true"
         style={{ display: 'block', overflow: 'visible' }}>
         <defs>
           {LABEL_PATHS.map(p => (
@@ -100,26 +78,21 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
           ))}
         </defs>
 
-        {/* divider cross — grows from centre */}
-        <g
-          style={{
-            transformOrigin: `${CX}px ${CY}px`,
-            transform: mounted ? 'scale(1)' : 'scale(0)',
-            transition: 'transform 700ms cubic-bezier(.22,.61,.36,1) 250ms',
-          }}
-        >
+        <g style={{
+          transformOrigin: `${CX}px ${CY}px`,
+          transform: (mounted || prefersReduced) ? 'scale(1)' : 'scale(0)',
+          transition: prefersReduced ? 'none' : 'transform 700ms cubic-bezier(.22,.61,.36,1) 250ms',
+        }}>
           <line x1={CX - R_RING} y1={CY} x2={CX + R_RING} y2={CY}
             stroke="var(--onexis-blau-50)" strokeWidth="1.5" />
           <line x1={CX} y1={CY - R_RING} x2={CX} y2={CY + R_RING}
             stroke="var(--onexis-blau-50)" strokeWidth="1.5" />
         </g>
 
-        {/* arcs — base gray + active overlay */}
         {ARC_ANGLES.map((a, i) => {
-          const isActive = activeIdx === i;
+          const isActive = activeIdx === i
           return (
             <g key={i}>
-              {/* base track */}
               <path
                 d={arcPath(a.start + 0.3, a.end - 0.3, R_RING, 1)}
                 fill="none"
@@ -128,11 +101,10 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
                 strokeLinecap="butt"
                 style={{
                   strokeDasharray: circumQuarter,
-                  strokeDashoffset: mounted ? 0 : circumQuarter,
-                  transition: `stroke-dashoffset 900ms cubic-bezier(.22,.61,.36,1) ${i * 140}ms`,
+                  strokeDashoffset: (mounted || prefersReduced) ? 0 : circumQuarter,
+                  transition: prefersReduced ? 'none' : `stroke-dashoffset 900ms cubic-bezier(.22,.61,.36,1) ${i * 140}ms`,
                 }}
               />
-              {/* active overlay */}
               <path
                 d={arcPath(a.start + 0.3, a.end - 0.3, R_RING, 1)}
                 fill="none"
@@ -142,20 +114,19 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
                 style={{
                   strokeDasharray: circumQuarter,
                   strokeDashoffset: isActive ? 0 : circumQuarter,
-                  transition: 'stroke-dashoffset 600ms cubic-bezier(.22,.61,.36,1)',
+                  transition: prefersReduced ? 'none' : 'stroke-dashoffset 600ms cubic-bezier(.22,.61,.36,1)',
                   filter: isActive ? 'drop-shadow(0 4px 12px rgba(98,189,204,.35))' : 'none',
                 }}
               />
             </g>
-          );
+          )
         })}
 
-        {/* per-quadrant fill (subtle teal tint) */}
         {ARC_ANGLES.map((a, i) => {
-          const isActive = activeIdx === i;
-          const [sx, sy] = polar(a.start, R_RING - 4);
-          const [ex, ey] = polar(a.end, R_RING - 4);
-          const d = `M ${CX} ${CY} L ${sx} ${sy} A ${R_RING - 4} ${R_RING - 4} 0 0 1 ${ex} ${ey} Z`;
+          const isActive = activeIdx === i
+          const [sx, sy] = polar(a.start, R_RING - 4)
+          const [ex, ey] = polar(a.end, R_RING - 4)
+          const d = `M ${CX} ${CY} L ${sx} ${sy} A ${R_RING - 4} ${R_RING - 4} 0 0 1 ${ex} ${ey} Z`
           return (
             <path
               key={'fill-' + i}
@@ -163,21 +134,20 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
               fill="var(--accent)"
               style={{
                 opacity: isActive ? 0.06 : 0,
-                transition: 'opacity 500ms var(--ease-out)',
+                transition: prefersReduced ? 'none' : 'opacity 500ms var(--ease-out)',
                 pointerEvents: 'all',
                 cursor: 'pointer',
               }}
               onMouseEnter={() => onPick(i, 'hover')}
               onClick={() => onPick(i, 'click')}
             />
-          );
+          )
         })}
 
-        {/* invisible hit-areas for inactive quadrants too */}
         {ARC_ANGLES.map((a, i) => {
-          const [sx, sy] = polar(a.start, R_RING - 4);
-          const [ex, ey] = polar(a.end, R_RING - 4);
-          const d = `M ${CX} ${CY} L ${sx} ${sy} A ${R_RING - 4} ${R_RING - 4} 0 0 1 ${ex} ${ey} Z`;
+          const [sx, sy] = polar(a.start, R_RING - 4)
+          const [ex, ey] = polar(a.end, R_RING - 4)
+          const d = `M ${CX} ${CY} L ${sx} ${sy} A ${R_RING - 4} ${R_RING - 4} 0 0 1 ${ex} ${ey} Z`
           return (
             <path
               key={'hit-' + i}
@@ -187,12 +157,11 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
               onClick={() => onPick(i, 'click')}
               style={{ cursor: 'pointer' }}
             />
-          );
+          )
         })}
 
-        {/* labels — curved along the arcs */}
         {TOM_QUADRANTS.map((q, i) => {
-          const isActive = activeIdx === i;
+          const isActive = activeIdx === i
           return (
             <text
               key={'lbl-' + i}
@@ -202,9 +171,9 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
                 fontWeight: isActive ? 600 : 500,
                 letterSpacing: '0.01em',
                 fill: isActive ? 'var(--fg)' : 'var(--fg-muted)',
-                transition: 'fill 400ms, font-weight 400ms, opacity 600ms',
-                opacity: mounted ? 1 : 0,
-                transitionDelay: mounted ? `${600 + i * 90}ms` : '0ms',
+                transition: prefersReduced ? 'none' : 'fill 400ms, font-weight 400ms, opacity 600ms',
+                opacity: (mounted || prefersReduced) ? 1 : 0,
+                transitionDelay: (mounted && !prefersReduced) ? `${600 + i * 90}ms` : '0ms',
                 pointerEvents: 'none',
               }}
             >
@@ -212,20 +181,19 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
                 {q.title}
               </textPath>
             </text>
-          );
+          )
         })}
 
-        {/* icons — one per quadrant (official ONEXIS SVGs) */}
         {ICON_CENTERS.map(([x, y], i) => {
-          const isActive = activeIdx === i;
+          const isActive = activeIdx === i
           return (
             <g
               key={'icn-' + i}
               transform={`translate(${x}, ${y})`}
               style={{
-                opacity: mounted ? 1 : 0,
-                transition: 'opacity 500ms var(--ease-out)',
-                transitionDelay: mounted ? `${500 + i * 90}ms` : '0ms',
+                opacity: (mounted || prefersReduced) ? 1 : 0,
+                transition: prefersReduced ? 'none' : 'opacity 500ms var(--ease-out)',
+                transitionDelay: (mounted && !prefersReduced) ? `${500 + i * 90}ms` : '0ms',
                 pointerEvents: 'none',
               }}
             >
@@ -239,40 +207,40 @@ function TOMCircle({ activeIdx, onPick, mounted }) {
                   filter: isActive
                     ? 'none'
                     : 'grayscale(1) brightness(1.1) opacity(.55)',
-                  transition: 'filter 400ms var(--ease-out)',
+                  transition: prefersReduced ? 'none' : 'filter 400ms var(--ease-out)',
                 }}
               />
             </g>
-          );
+          )
         })}
 
-        {/* centre badge with ONEXIS X */}
-        <g
-          style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? 'scale(1)' : 'scale(.4)',
-            transformOrigin: `${CX}px ${CY}px`,
-            transition: 'opacity 500ms, transform 700ms cubic-bezier(.22,.61,.36,1)',
-            transitionDelay: '950ms',
-          }}
-        >
+        <g style={{
+          opacity: (mounted || prefersReduced) ? 1 : 0,
+          transform: (mounted || prefersReduced) ? 'scale(1)' : 'scale(.4)',
+          transformOrigin: `${CX}px ${CY}px`,
+          transition: prefersReduced ? 'none' : 'opacity 500ms, transform 700ms cubic-bezier(.22,.61,.36,1)',
+          transitionDelay: prefersReduced ? '0ms' : '950ms',
+        }}>
           <circle cx={CX} cy={CY} r="50" fill="var(--bg-muted)" />
           <circle cx={CX} cy={CY} r="40" fill="var(--onexis-anthrazit)" />
-          <image href="assets/logo-x-negativ.svg"
+          <image href="/assets/logo-x-negativ.svg"
             x={CX - 18} y={CY - 18} width="36" height="36" />
         </g>
-
       </svg>
     </div>
-  );
+  )
 }
 
 /* ------------------------------------------------------------------ */
-/*  Narration                                                         */
+/*  Narration panel                                                   */
 /* ------------------------------------------------------------------ */
-function NarrationPanel({ q, idx }) {
+function NarrationPanel({ q, idx, tabId }) {
   return (
-    <div key={idx} className="tom-narration">
+    <div
+      role="tabpanel"
+      aria-labelledby={tabId}
+      className="tom-narration"
+    >
       <div style={{
         fontFamily: 'var(--font-mono)', fontSize: 12,
         letterSpacing: '0.16em', color: 'var(--accent-ink)', fontWeight: 600,
@@ -313,89 +281,98 @@ function NarrationPanel({ q, idx }) {
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
 /* ------------------------------------------------------------------ */
 /*  Section                                                           */
 /* ------------------------------------------------------------------ */
 function TOMSection() {
-  const sectionRef = React.useRef(null);
-  const stickyRef = React.useRef(null);
-  const [activeIdx, setActiveIdx] = React.useState(0);
-  const [mounted, setMounted] = React.useState(false);
-  const userOverrideRef = React.useRef(null); // null | number | 'scroll'
-  const [pinned, setPinned] = React.useState(false);
+  const prefersReduced = React.useRef(
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ).current
 
-  // IntersectionObserver to trigger initial draw-in
+  const sectionRef = React.useRef(null)
+  const [activeIdx, setActiveIdx] = React.useState(0)
+  const [mounted, setMounted] = React.useState(false)
+  const userOverrideRef = React.useRef(null)
+  const [pinned, setPinned] = React.useState(false)
+
   React.useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
+    const el = sectionRef.current
+    if (!el) return
+    if (prefersReduced) { setMounted(true); return }
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          setMounted(true);
-          io.disconnect();
-        }
-      });
-    }, { threshold: 0.2 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+        if (e.isIntersecting) { setMounted(true); io.disconnect() }
+      })
+    }, { threshold: 0.2 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [prefersReduced])
 
-  // Scroll progress while pinned drives the active quadrant.
-  // rAF-throttled so we read layout at most once per frame.
   React.useEffect(() => {
-    let ticking = false;
+    let ticking = false
     const measure = () => {
-      ticking = false;
-      const el = sectionRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const viewport = window.innerHeight;
-      const total = rect.height - viewport;
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / Math.max(1, total)));
-      const inPin = rect.top <= 0 && rect.bottom > viewport;
-      setPinned(inPin);
+      ticking = false
+      const el = sectionRef.current
+      if (!el) return
+      const rect = el.getBoundingClientRect()
+      const viewport = window.innerHeight
+      const total = rect.height - viewport
+      const scrolled = -rect.top
+      const progress = Math.max(0, Math.min(1, scrolled / Math.max(1, total)))
+      const inPin = rect.top <= 0 && rect.bottom > viewport
+      setPinned(inPin)
       if (inPin && userOverrideRef.current !== 'user') {
-        const step = Math.min(3, Math.floor(progress * 4));
-        userOverrideRef.current = 'scroll';
-        setActiveIdx(step);
+        const step = Math.min(3, Math.floor(progress * 4))
+        userOverrideRef.current = 'scroll'
+        setActiveIdx(step)
       }
-    };
+    }
     const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(measure);
-    };
-    measure();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+      if (ticking) return
+      ticking = true
+      window.requestAnimationFrame(measure)
+    }
+    measure()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, []);
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
 
-  // Auto-cycle when not pinned AND no user override
   React.useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || prefersReduced) return
     const id = setInterval(() => {
-      if (userOverrideRef.current === 'user') return;
-      if (pinned) return;
-      setActiveIdx(i => (i + 1) % 4);
-    }, 2800);
-    return () => clearInterval(id);
-  }, [mounted, pinned]);
+      if (userOverrideRef.current === 'user') return
+      if (pinned) return
+      setActiveIdx(i => (i + 1) % 4)
+    }, 2800)
+    return () => clearInterval(id)
+  }, [mounted, pinned, prefersReduced])
 
   const pick = (i, source) => {
-    userOverrideRef.current = source === 'click' ? 'user' : userOverrideRef.current;
-    setActiveIdx(i);
-  };
+    userOverrideRef.current = source === 'click' ? 'user' : userOverrideRef.current
+    setActiveIdx(i)
+  }
   const clearOverride = () => {
-    if (userOverrideRef.current === 'user') userOverrideRef.current = null;
-  };
+    if (userOverrideRef.current === 'user') userOverrideRef.current = null
+  }
+
+  const handleTabKeyDown = (e, i) => {
+    if (e.key === 'ArrowRight') {
+      const next = (i + 1) % 4
+      pick(next, 'click')
+      document.getElementById(`tom-tab-${next}`)?.focus()
+    } else if (e.key === 'ArrowLeft') {
+      const prev = (i + 3) % 4
+      pick(prev, 'click')
+      document.getElementById(`tom-tab-${prev}`)?.focus()
+    }
+  }
 
   return (
     <>
@@ -410,7 +387,6 @@ function TOMSection() {
         }}
       >
         <div
-          ref={stickyRef}
           className="tom-sticky"
           style={{
             position: 'sticky',
@@ -425,61 +401,74 @@ function TOMSection() {
             display: 'grid', gridTemplateColumns: 'minmax(0, 0.95fr) minmax(0, 1.05fr)',
             gap: 64, alignItems: 'center', width: '100%',
           }}>
-            {/* Narration */}
             <div>
-              <div className="eyebrow">{window.CONTENT.tom.eyebrow}</div>
+              <div className="eyebrow">{CONTENT.tom.eyebrow}</div>
               <h2 className="h-section" style={{
                 marginTop: 14, marginBottom: 32, maxWidth: 540,
               }}>
-                {window.CONTENT.tom.heading[0]}<br />
-                {window.CONTENT.tom.heading[1]}
+                {CONTENT.tom.heading[0]}<br />
+                {CONTENT.tom.heading[1]}
               </h2>
 
-              <div style={{
-                display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8,
-                marginBottom: 28,
-              }}>
+              {/* Tablist — the primary keyboard control for the TOM diagram */}
+              <div
+                role="tablist"
+                aria-label="TOM-Dimensionen"
+                style={{
+                  display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8,
+                  marginBottom: 28,
+                }}
+              >
                 {TOM_QUADRANTS.map((q, i) => (
                   <button
                     key={q.title}
+                    id={`tom-tab-${i}`}
+                    role="tab"
+                    aria-selected={activeIdx === i}
+                    tabIndex={activeIdx === i ? 0 : -1}
                     onClick={() => pick(i, 'click')}
                     onMouseEnter={() => pick(i, 'hover')}
+                    onKeyDown={(e) => handleTabKeyDown(e, i)}
                     style={{
                       appearance: 'none', background: 'transparent', border: 0,
                       padding: 0, cursor: 'pointer', textAlign: 'left',
-                    }}>
+                    }}
+                  >
                     <div style={{
                       height: 2,
                       background: activeIdx === i ? 'var(--accent)' : 'var(--border-strong)',
-                      transition: 'background 300ms var(--ease-out)',
+                      transition: prefersReduced ? 'none' : 'background 300ms var(--ease-out)',
                     }} />
                     <div style={{
                       marginTop: 8,
                       fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase',
                       fontWeight: 600,
                       color: activeIdx === i ? 'var(--fg)' : 'var(--fg-muted)',
-                      transition: 'color 300ms',
+                      transition: prefersReduced ? 'none' : 'color 300ms',
                     }}>{q.short}</div>
                   </button>
                 ))}
               </div>
 
-              <NarrationPanel q={TOM_QUADRANTS[activeIdx]} idx={activeIdx} />
+              <NarrationPanel
+                q={TOM_QUADRANTS[activeIdx]}
+                idx={activeIdx}
+                tabId={`tom-tab-${activeIdx}`}
+              />
             </div>
 
-            {/* Diagram */}
             <div>
               <TOMCircle
                 activeIdx={activeIdx}
                 onPick={pick}
                 mounted={mounted}
+                prefersReduced={prefersReduced}
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Service-Zeile nach der gepinnten Sektion */}
       <section className="section muted" style={{
         paddingTop: 0, paddingBottom: 120, background: 'var(--bg-muted)',
         marginTop: -1,
@@ -502,7 +491,7 @@ function TOMSection() {
         </div>
       </section>
     </>
-  );
+  )
 }
 
-window.TOMSection = TOMSection;
+export default TOMSection

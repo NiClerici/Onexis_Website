@@ -1,6 +1,7 @@
-/* eslint-disable */
+import CONTENT from '../content/de.js'
+
 function Sectors() {
-  const c = window.CONTENT.sectors;
+  const c = CONTENT.sectors
   return (
     <section className="section" style={{ paddingTop: 96, paddingBottom: 96 }}>
       <div className="container-wide split-grid" style={{
@@ -8,12 +9,12 @@ function Sectors() {
       }}>
         <div>
           <div className="eyebrow">{c.eyebrow}</div>
-          <h3 style={{
-            margin: '16px 0 0', fontWeight: 300, fontSize: 32,
+          <h2 style={{
+            margin: '16px 0 0', fontWeight: 300, fontSize: 'clamp(26px, 2.8vw, 32px)',
             letterSpacing: '-0.02em', lineHeight: 1.1,
           }}>
             {c.heading}
-          </h3>
+          </h2>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
           {c.items.map(s => (
@@ -27,6 +28,7 @@ function Sectors() {
         </div>
       </div>
     </section>
-  );
+  )
 }
-window.Sectors = Sectors;
+
+export default Sectors

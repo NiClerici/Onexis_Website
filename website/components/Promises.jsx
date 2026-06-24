@@ -1,6 +1,7 @@
-/* eslint-disable */
+import CONTENT from '../content/de.js'
+
 function Promises() {
-  const c = window.CONTENT.promises;
+  const c = CONTENT.promises
   return (
     <section className="section" style={{ paddingTop: 120, paddingBottom: 120 }}>
       <div className="container">
@@ -20,7 +21,7 @@ function Promises() {
               padding: '24px 0',
               borderBottom: '1px solid var(--border)',
             }}>
-              <img src="assets/logo-x.svg" alt=""
+              <img src="/assets/logo-x.svg" alt="" aria-hidden="true"
                 style={{ width: 26, height: 26, flex: '0 0 auto' }} />
               <div style={{ fontSize: 22, fontWeight: 400, color: 'var(--fg)' }}>
                 {t}
@@ -30,6 +31,7 @@ function Promises() {
         </div>
       </div>
     </section>
-  );
+  )
 }
-window.Promises = Promises;
+
+export default Promises

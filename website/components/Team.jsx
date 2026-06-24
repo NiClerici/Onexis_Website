@@ -1,6 +1,7 @@
-/* eslint-disable */
+import CONTENT from '../content/de.js'
+
 function Team() {
-  const c = window.CONTENT.team;
+  const c = CONTENT.team
   return (
     <section id="team" className="section muted">
       <div className="container-wide">
@@ -29,7 +30,7 @@ function Team() {
                 background: 'var(--onexis-anthrazit)', color: '#fff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontWeight: 500, fontSize: 16,
-              }}>{c.memberInitials}</div>
+              }} aria-hidden="true">{c.memberInitials}</div>
               <div>
                 <div style={{ fontSize: 15, fontWeight: 600 }}>{c.memberName}</div>
                 <div style={{ fontSize: 13, color: 'var(--fg-muted)' }}>
@@ -39,7 +40,6 @@ function Team() {
             </div>
           </div>
 
-          {/* Brand-Tile */}
           <div style={{
             position: 'relative', aspectRatio: '1',
             maxWidth: 420, justifySelf: 'end', width: '100%',
@@ -47,12 +47,14 @@ function Team() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             overflow: 'hidden',
           }}>
-            <img src="assets/logo-x-negativ.svg" alt=""
+            <img src="/assets/logo-x-negativ.svg" alt=""
+              aria-hidden="true"
               style={{ width: '50%', height: 'auto' }} />
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }
-window.Team = Team;
+
+export default Team

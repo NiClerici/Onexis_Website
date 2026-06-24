@@ -1,6 +1,16 @@
-/* eslint-disable */
+import CONTENT from '../content/de.js'
+
+export function Arrow() {
+  return (
+    <svg className="arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M2 7h10M8 3l4 4-4 4" />
+    </svg>
+  )
+}
+
 function Hero() {
-  const c = window.CONTENT.hero;
+  const c = CONTENT.hero
   return (
     <section id="top" className="hero" style={{
       position: 'relative',
@@ -8,8 +18,7 @@ function Hero() {
       color: '#fff',
       overflow: 'hidden',
     }}>
-      {/* faint X watermark -- slowly settles in on load */}
-      <img src="assets/logo-x-negativ.svg" alt="" aria-hidden="true"
+      <img src="/assets/logo-x-negativ.svg" alt="" aria-hidden="true"
         className="hero-watermark"
         style={{
           position: 'absolute',
@@ -18,13 +27,9 @@ function Hero() {
           opacity: 0.05,
           pointerEvents: 'none',
         }} />
-<div className="container-wide hero-inner" style={{
-        position: 'relative',
-      }}>
-        {/* Eyebrow with growing rule */}
-        <div className="hero-eyebrow-row" style={{
-          display: 'flex', alignItems: 'center', gap: 16,
-        }}>
+
+      <div className="container-wide hero-inner" style={{ position: 'relative' }}>
+        <div className="hero-eyebrow-row" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <span className="hero-rule" />
           <div style={{
             fontSize: 13, fontWeight: 600,
@@ -32,7 +37,8 @@ function Hero() {
             textTransform: 'uppercase', color: 'var(--accent)',
           }}>Projects in Motion</div>
         </div>
-<h1 style={{
+
+        <h1 style={{
           margin: '32px 0 0',
           fontWeight: 300,
           fontSize: 'clamp(48px, 7vw, 92px)',
@@ -44,14 +50,16 @@ function Hero() {
             {c.title}
           </span>
         </h1>
-<p className="hero-line" style={{
+
+        <p className="hero-line" style={{
           '--d': '0.55s',
           marginTop: 36, fontSize: 19, lineHeight: 1.6,
-          color: '#D6D6D6', maxWidth: 620,
+          color: 'var(--fg-on-dark-muted)', maxWidth: 620,
         }}>
           {c.subtitle}
         </p>
-<div className="hero-line" style={{
+
+        <div className="hero-line" style={{
           '--d': '0.7s',
           display: 'flex', gap: 12, marginTop: 44, flexWrap: 'wrap',
         }}>
@@ -64,17 +72,7 @@ function Hero() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-function Arrow() {
-  return (
-    <svg className="arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor"
-      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2 7h10M8 3l4 4-4 4" />
-    </svg>
-  );
-}
-
-window.Hero = Hero;
-window.Arrow = Arrow;
+export default Hero

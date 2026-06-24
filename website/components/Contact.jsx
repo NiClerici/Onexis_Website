@@ -1,14 +1,15 @@
-/* eslint-disable */
-/* Module-scope field component — defining it inside Contact() would remount it
-   on every keystroke and steal focus from the input. */
+import React from 'react'
+import CONTENT from '../content/de.js'
+import { Arrow } from './Hero.jsx'
+
 function ContactField({ id, label, value, onChange, onBlur, error, type, textarea, autoComplete }) {
-  const describedBy = error ? id + '-err' : undefined;
+  const describedBy = error ? id + '-err' : undefined
   const shared = {
     id, name: id, className: 'field', value, onChange, onBlur,
     required: true,
     'aria-invalid': error ? 'true' : undefined,
     'aria-describedby': describedBy,
-  };
+  }
   return (
     <div>
       <label className="field-label" htmlFor={id}>{label}</label>
@@ -19,55 +20,55 @@ function ContactField({ id, label, value, onChange, onBlur, error, type, textare
       )}
       {error && <p id={id + '-err'} className="field-error" role="alert">{error}</p>}
     </div>
-  );
+  )
 }
 
 function Contact() {
-  const c = window.CONTENT.contact;
-  const [submitted, setSubmitted] = React.useState(false);
-  const [sending, setSending] = React.useState(false);
+  const c = CONTENT.contact
+  const [submitted, setSubmitted] = React.useState(false)
+  const [sending, setSending] = React.useState(false)
   const [form, setForm] = React.useState({
     vorname: '', nachname: '', email: '', mitteilung: '',
-  });
-  const [errors, setErrors] = React.useState({});
-  const [touched, setTouched] = React.useState({});
+  })
+  const [errors, setErrors] = React.useState({})
+  const [touched, setTouched] = React.useState({})
 
   const validate = (f) => {
-    const e = {};
-    if (!f.vorname.trim())    e.vorname = c.errRequired;
-    if (!f.nachname.trim())   e.nachname = c.errRequired;
-    if (!f.email.trim())      e.email = c.errRequired;
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = c.errEmail;
-    if (!f.mitteilung.trim()) e.mitteilung = c.errRequired;
-    return e;
-  };
+    const e = {}
+    if (!f.vorname.trim())    e.vorname = c.errRequired
+    if (!f.nachname.trim())   e.nachname = c.errRequired
+    if (!f.email.trim())      e.email = c.errRequired
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = c.errEmail
+    if (!f.mitteilung.trim()) e.mitteilung = c.errRequired
+    return e
+  }
 
   const set = (k) => (ev) => {
-    const next = { ...form, [k]: ev.target.value };
-    setForm(next);
-    if (touched[k]) setErrors(validate(next));
-  };
+    const next = { ...form, [k]: ev.target.value }
+    setForm(next)
+    if (touched[k]) setErrors(validate(next))
+  }
   const blur = (k) => () => {
-    setTouched((t) => ({ ...t, [k]: true }));
-    setErrors(validate(form));
-  };
+    setTouched((t) => ({ ...t, [k]: true }))
+    setErrors(validate(form))
+  }
 
   const onSubmit = (ev) => {
-    ev.preventDefault();
-    if (sending) return;                       // guard against double-submit
-    const e = validate(form);
-    setErrors(e);
-    setTouched({ vorname: true, nachname: true, email: true, mitteilung: true });
+    ev.preventDefault()
+    if (sending) return
+    const e = validate(form)
+    setErrors(e)
+    setTouched({ vorname: true, nachname: true, email: true, mitteilung: true })
     if (Object.keys(e).length) {
-      const first = ['vorname', 'nachname', 'email', 'mitteilung'].find((k) => e[k]);
-      const el = document.getElementById('contact-' + first);
-      if (el) el.focus();
-      return;
+      const first = ['vorname', 'nachname', 'email', 'mitteilung'].find((k) => e[k])
+      const el = document.getElementById('contact-' + first)
+      if (el) el.focus()
+      return
     }
-    setSending(true);
+    setSending(true)
     // No backend wired yet — simulate the request so the UI is honest about state.
-    setTimeout(() => { setSending(false); setSubmitted(true); }, 600);
-  };
+    setTimeout(() => { setSending(false); setSubmitted(true) }, 600)
+  }
 
   return (
     <section id="kontakt" className="section">
@@ -147,6 +148,7 @@ function Contact() {
         </form>
       </div>
     </section>
-  );
+  )
 }
-window.Contact = Contact;
+
+export default Contact

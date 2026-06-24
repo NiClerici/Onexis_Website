@@ -1,6 +1,11 @@
 .vercel
 .env*.local
 
+# Build output & dependencies
+website/dist/
+website/node_modules/
+website/package-lock.json
+
 # IDE & tool configs
 .cursor/
 .agents/

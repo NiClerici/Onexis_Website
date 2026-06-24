@@ -2,8 +2,18 @@
   "name": "onexis-website",
   "version": "1.0.0",
   "private": true,
-  "description": "ONEXIS GmbH - Projects in Motion",
+  "type": "module",
   "scripts": {
-    "build": "echo 'Static site - no build required'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
   }
 }

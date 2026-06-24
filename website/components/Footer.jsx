@@ -1,27 +1,26 @@
-/* eslint-disable */
+import CONTENT from '../content/de.js'
+
 function Footer() {
-  const c = window.CONTENT.footer;
+  const c = CONTENT.footer
   const linkStyle = {
     color: 'var(--fg-on-dark-muted)', fontSize: 14, textDecoration: 'none',
     padding: '4px 0', borderRadius: 4,
-  };
+  }
   const colTitle = {
     fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
     textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 16,
-  };
+  }
   return (
     <footer style={{
       background: 'var(--onexis-anthrazit)', color: '#fff',
       padding: '72px 0 32px',
     }}>
       <div className="container-wide">
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1.6fr 1fr 1fr',
-          gap: 48,
+        <div className="footer-grid" style={{
           paddingBottom: 40, borderBottom: '1px solid rgba(255,255,255,.1)',
         }}>
           <div>
-            <img src="assets/logo-negativ.svg" alt="ONEXIS"
+            <img src="/assets/logo-negativ.svg" alt="ONEXIS"
               style={{ height: 28, marginBottom: 18 }} />
             <p style={{
               margin: 0, fontSize: 14, color: 'var(--fg-on-dark-muted)', lineHeight: 1.7, maxWidth: 360,
@@ -63,6 +62,7 @@ function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
-window.Footer = Footer;
+
+export default Footer
