@@ -11,8 +11,8 @@ window.CONTENT = {
   },
 
   hero: {
-    title: 'asdasdfasdfasf ',
-    subtitle: 'Hallo Hallo Hallo.',
+    title: 'Test',
+    subtitle: 'Test Test',
     ctaPrimary: 'Leistungen ansehen',
     ctaSecondary: 'Gespraech vereinbaren',
   },
