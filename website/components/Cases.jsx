@@ -1,22 +1,15 @@
 /* eslint-disable */
 function CaseRow({ c }) {
   return (
-    <article style={{
-      display: 'grid',
-      gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)',
-      gap: 56,
-      padding: '48px 0',
-      borderTop: '1px solid var(--border)',
-      alignItems: 'start',
-    }}>
+    <article className="case-row">
       <div>
         <div style={{
           display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16,
           fontSize: 13, color: 'var(--fg-muted)',
         }}>
           <span>{c.sector}</span>
-          <span style={{ color: 'var(--accent)' }}>·</span>
-          <span style={{ color: 'var(--accent)' }}>{c.role}</span>
+          <span style={{ color: 'var(--accent-ink)' }}>·</span>
+          <span style={{ color: 'var(--accent-ink)' }}>{c.role}</span>
         </div>
         <h3 style={{
           margin: 0, fontWeight: 300, fontSize: 'clamp(26px, 2.6vw, 34px)',

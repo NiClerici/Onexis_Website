@@ -10,15 +10,12 @@ function Vorgehen() {
           {c.heading[1]}
         </h2>
 
-        <div style={{
-          marginTop: 56,
-          display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 32,
-        }}>
+        <div className="steps-grid" style={{ marginTop: 56 }}>
           {c.steps.map(s => (
             <div key={s.n}>
               <div style={{
                 fontSize: 13, fontWeight: 600, letterSpacing: '0.16em',
-                color: 'var(--accent)',
+                color: 'var(--accent-ink)',
               }}>{s.n}</div>
               <h3 style={{
                 margin: '12px 0 10px',

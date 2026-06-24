@@ -18,12 +18,20 @@
 :root {
   /* ---- Brand Colors (from brandsheet) ------------------- */
   --onexis-anthrazit:        #3C3C3C; /* primary text / dark surface */
-  --onexis-anthrazit-50:     #9D9D9D; /* secondary text / dividers */
+  --onexis-anthrazit-50:     #9D9D9D; /* dividers / decorative only — fails AA as text */
   --onexis-anthrazit-25:     #CECECE; /* light borders / subtle bg */
 
-  --onexis-blau:             #62BDCC; /* accent / interactive */
+  /* Muted text that meets WCAG AA on white (5.7:1) and on paper (5.4:1).
+     Use this for secondary copy — NOT the -50 swatch, which is for hairlines. */
+  --onexis-anthrazit-text:   #666666; /* AA-safe secondary text */
+
+  --onexis-blau:             #62BDCC; /* accent — fills, strokes, rules, button bg */
   --onexis-blau-50:          #B0DEE5; /* subtle accent / hover bg */
   --onexis-blau-25:          #D8EEF2; /* tint backgrounds / chips */
+  /* Darkened teal for accent-coloured TEXT on light backgrounds.
+     AA on white (5.4:1) and on paper (5.0:1); #62BDCC as text is only 2.2:1. */
+  --onexis-blau-text:        #197585;
+  --onexis-blau-text-hover:  #0F5C68;
 
   /* ---- Neutrals (derived) ------------------------------- */
   --onexis-white:            #FFFFFF;
@@ -31,19 +39,26 @@
   --onexis-line:             #E6E7E9; /* hairlines */
   --onexis-black:            #1F1F1F; /* rare; for max contrast */
 
+  /* Text on the dark Anthrazit surface (footer / hero / inverse sections) */
+  --fg-on-dark:              #FFFFFF;
+  --fg-on-dark-muted:        #CECECE; /* 7:1 on anthrazit */
+  --fg-on-dark-subtle:       #B0B0B0; /* 5.1:1 on anthrazit — smallest legible */
+
   /* ---- Semantic foreground / background ----------------- */
   --bg:                      var(--onexis-white);
   --bg-muted:                var(--onexis-paper);
   --bg-inverse:              var(--onexis-anthrazit);
 
   --fg:                      var(--onexis-anthrazit);
-  --fg-muted:                var(--onexis-anthrazit-50);
+  --fg-muted:                var(--onexis-anthrazit-text); /* AA-safe (was -50 / 2.7:1) */
   --fg-subtle:               var(--onexis-anthrazit-25);
   --fg-inverse:              var(--onexis-white);
 
-  --accent:                  var(--onexis-blau);
+  --accent:                  var(--onexis-blau);       /* graphic use: fills, strokes, rules */
   --accent-hover:            #4FAFC0;
   --accent-soft:             var(--onexis-blau-25);
+  --accent-ink:              var(--onexis-blau-text);       /* teal as TEXT on light */
+  --accent-ink-hover:        var(--onexis-blau-text-hover);
 
   --border:                  var(--onexis-line);
   --border-strong:           var(--onexis-anthrazit-25);
@@ -183,7 +198,7 @@ h4, .h4 {
   font-size: var(--fs-eyebrow);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-ink); /* AA-safe teal on light backgrounds */
 }
 
 p, .body {
@@ -212,11 +227,16 @@ p, .body {
 }
 
 a {
-  color: var(--accent);
+  color: var(--accent-ink); /* AA-safe teal as link text on light */
   text-decoration: none;
   transition: color var(--dur-base) var(--ease-out);
 }
-a:hover { color: var(--accent-hover); }
+a:hover { color: var(--accent-ink-hover); }
+/* On dark surfaces the bright brand teal is legible (5:1) and on-brand */
+.section.inverse a,
+.on-dark a { color: var(--accent); }
+.section.inverse a:hover,
+.on-dark a:hover { color: var(--accent-hover); }
 
 code, .mono {
   font-family: var(--font-mono);

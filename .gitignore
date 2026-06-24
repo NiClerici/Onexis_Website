@@ -1,2 +1,7 @@
 .vercel
 .env*.local
+
+# IDE & tool configs
+.cursor/
+.agents/
+.claude/

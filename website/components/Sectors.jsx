@@ -3,9 +3,8 @@ function Sectors() {
   const c = window.CONTENT.sectors;
   return (
     <section className="section" style={{ paddingTop: 96, paddingBottom: 96 }}>
-      <div className="container-wide" style={{
-        display: 'grid', gridTemplateColumns: '1fr 2fr',
-        gap: 56, alignItems: 'center',
+      <div className="container-wide split-grid" style={{
+        '--split-cols': '1fr 2fr', '--split-gap': '56px', alignItems: 'center',
       }}>
         <div>
           <div className="eyebrow">{c.eyebrow}</div>

@@ -275,7 +275,7 @@ function NarrationPanel({ q, idx }) {
     <div key={idx} className="tom-narration">
       <div style={{
         fontFamily: 'var(--font-mono)', fontSize: 12,
-        letterSpacing: '0.16em', color: 'var(--accent)', fontWeight: 600,
+        letterSpacing: '0.16em', color: 'var(--accent-ink)', fontWeight: 600,
       }}>
         {String(idx + 1).padStart(2, '0')}&nbsp;·&nbsp;DIMENSION
       </div>
@@ -287,7 +287,7 @@ function NarrationPanel({ q, idx }) {
         {q.title}.
       </h3>
       <div style={{
-        fontSize: 15, color: 'var(--accent)', fontWeight: 500,
+        fontSize: 15, color: 'var(--accent-ink)', fontWeight: 500,
       }}>{q.sub}</div>
       <p style={{
         margin: '22px 0 0', fontSize: 17, lineHeight: 1.6, color: 'var(--fg)',
@@ -343,9 +343,12 @@ function TOMSection() {
     return () => io.disconnect();
   }, []);
 
-  // Scroll progress while pinned drives the active quadrant
+  // Scroll progress while pinned drives the active quadrant.
+  // rAF-throttled so we read layout at most once per frame.
   React.useEffect(() => {
-    const onScroll = () => {
+    let ticking = false;
+    const measure = () => {
+      ticking = false;
       const el = sectionRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -361,7 +364,12 @@ function TOMSection() {
         setActiveIdx(step);
       }
     };
-    onScroll();
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(measure);
+    };
+    measure();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     return () => {
@@ -477,19 +485,9 @@ function TOMSection() {
         marginTop: -1,
       }}>
         <div className="container-wide">
-          <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0,
-            borderTop: '1px solid var(--border)',
-            borderBottom: '1px solid var(--border)',
-            background: '#fff',
-            borderRadius: 12,
-            overflow: 'hidden',
-          }}>
-            {SERVICES.map((s, i) => (
-              <div key={s.name} style={{
-                padding: '32px 24px',
-                borderLeft: i === 0 ? 'none' : '1px solid var(--border)',
-              }}>
+          <div className="services-row">
+            {SERVICES.map((s) => (
+              <div key={s.name} className="service-cell">
                 <h4 style={{
                   margin: 0, fontWeight: 500, fontSize: 20,
                   letterSpacing: '-0.005em',

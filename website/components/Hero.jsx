@@ -18,10 +18,8 @@ function Hero() {
           opacity: 0.05,
           pointerEvents: 'none',
         }} />
-<div className="container-wide" style={{
+<div className="container-wide hero-inner" style={{
         position: 'relative',
-        paddingTop: 140,
-        paddingBottom: 140,
       }}>
         {/* Eyebrow with growing rule */}
         <div className="hero-eyebrow-row" style={{
@@ -29,9 +27,10 @@ function Hero() {
         }}>
           <span className="hero-rule" />
           <div style={{
-            fontSize: 13, fontWeight: 600, letterSpacing: '0.42em',
+            fontSize: 13, fontWeight: 600,
+            letterSpacing: 'clamp(0.22em, 1.1vw, 0.42em)',
             textTransform: 'uppercase', color: 'var(--accent)',
-          }}>P&nbsp;R&nbsp;O&nbsp;J&nbsp;E&nbsp;C&nbsp;T&nbsp;S&nbsp;&nbsp;&nbsp;I&nbsp;N&nbsp;&nbsp;&nbsp;M&nbsp;O&nbsp;T&nbsp;I&nbsp;O&nbsp;N</div>
+          }}>Projects in Motion</div>
         </div>
 <h1 style={{
           margin: '32px 0 0',
@@ -54,7 +53,7 @@ function Hero() {
         </p>
 <div className="hero-line" style={{
           '--d': '0.7s',
-          display: 'flex', gap: 12, marginTop: 44,
+          display: 'flex', gap: 12, marginTop: 44, flexWrap: 'wrap',
         }}>
           <a href="#leistungen" className="btn btn-primary">
             {c.ctaPrimary} <Arrow />

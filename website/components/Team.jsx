@@ -4,9 +4,8 @@ function Team() {
   return (
     <section id="team" className="section muted">
       <div className="container-wide">
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1.2fr 1fr',
-          gap: 80, alignItems: 'center',
+        <div className="split-grid" style={{
+          '--split-cols': '1.2fr 1fr', '--split-gap': '80px', alignItems: 'center',
         }}>
           <div>
             <div className="eyebrow">{c.eyebrow}</div>
